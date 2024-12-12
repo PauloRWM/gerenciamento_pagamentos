@@ -7,3 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+
+# Gerenciador de pagamentos com STARKBANK
+
+Projeto desenvolvido para teste tecnico
+
+## Pré-requisitos
+
+Antes de iniciar, certifique-se de ter instalado:
+
+- Docker
+- Docker Compose
+
+Você pode verificar a instalação com os seguintes comandos:
+
+```bash
+docker --version
+docker-compose --version
