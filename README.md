@@ -8,6 +8,8 @@
 </p>
 
 
+
+
 # Gerenciador de pagamentos com STARKBANK
 
 Projeto desenvolvido para teste tecnico
@@ -24,3 +26,50 @@ Você pode verificar a instalação com os seguintes comandos:
 ```bash
 docker --version
 docker-compose --version
+```
+
+Se esses comandos não retornarem a versão instalada, você precisará instalar o Docker e o Docker Compose.
+
+## Instalação
+
+Para colocar o projeto em funcionamento, siga estes passos:
+
+1. Clone o repositório:
+   ```bash
+   git clone [URL do repositório]
+   ```
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd [nome-do-diretório]
+   ```
+3. Execute o Docker Compose:
+   ```bash
+   docker-compose up
+   ```
+
+Isso construirá as imagens necessárias e iniciará os contêineres definidos no arquivo `docker-compose.yml`.
+
+## Configuração de Webhook
+
+A URL do webhook é configurada com base no ambiente em que o projeto está sendo executado:
+
+- **Produção:** Configure a URL de webhook no ambiente de produção usando a variável de ambiente `APP_URL`.
+- **Desenvolvimento:** Para testes locais, use:
+  ```plaintext
+  http://localhost:8000/api/webhook
+  ```
+
+Adicione `/api/webhook` ao `APP_URL` para formar a URL completa do webhook.
+
+## Uso
+
+
+
+
+
+
+## Contato
+
+paulox.tec@gmail.com
+
+---
