@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use StarkBank\Transaction;
+
 use App\Models\Transactions;
 use StarkBank\Project;
-use StarkBank\Organization;
+
 use StarkBank\Settings;
 use StarkBank\Transfer;
-use StarkBank\Balance;
+
+use Illuminate\Support\Facades\Log;
+
 
 class starkController extends Controller
 {
@@ -31,53 +33,67 @@ class starkController extends Controller
     public function create(Request $request)
     {
 
+        try {
+
+
+            $Transaction = new Transactions();
+
+
+           
+            
+
+
+            $project = new Project([
+                "environment" => env("ENVIRONMENT"),
+                "id" => env("PROJECT_ID"),
+                "privateKey" => env("PRIVATE_KEY")
+            ]);
+
+            Settings::setUser($project);
 
 
 
-        $Transaction = new Transactions();
 
 
-        // dd(env("PRIVATE_KEY"));
-        $privateKeyContent = env("PRIVATE_KEY");
+            $data = $request->input();
+            // dd($data['bankCode']);
+            if (isset($data['bankCode']) && isset($data['branch']) && isset($data['account']) && isset($data['amount'])) {
+
+                $transfers = Transfer::create([
+                    new Transfer([
+                        "amount" => intval($data['amount']) * 100,
+                        "bankCode" => strval($data['bankCode']),
+                        "branchCode" => strval($data['branch']),
+                        "accountNumber" => strval($data['account']),
+                        "taxId" => strval($data['document']),
+                        "name" => strval($data['name']),
+
+                    ]),
+
+                ]);
+
+                $Transaction->stark_order = $transfers[0]->id;
+                $Transaction->status = "pending";
+                $Transaction->type = "bank_transfer";
+                $Transaction->save();
 
 
-        $project = new Project([
-            "environment" => "sandbox",
-            "id" => "6486646136504320",
-            "privateKey" => $privateKeyContent
-        ]);
+                return response()->json([
+                    'message' => 'Payment created successfully',
+                    'data' =>   $transfers[0],
+                ], 200);
+            }
+        } catch (\Exception $e) {
 
-        $data = $request->input();
-        // dd($data['bankCode']);
-        if (isset($data['bankCode']) && isset($data['branch']) && isset($data['account']) && isset($data['amount'])) {
-        Settings::setUser($project);
-        $transfers = Transfer::create([
-            new Transfer([
-                "amount" => intval($data['amount']),
-                "bankCode" => strval($data['bankCode']),  # TED
-                "branchCode" => strval($data['branch']),
-                "accountNumber" => strval($data['account']),
-                "taxId" => strval($data['document']),
-                "name" => strval($data['name']),
-                // "tags" => ["iron", "suit"]
-            ]),
+            dd($e);
 
-        ]);
+            Log::error('To make a transfer, enter the account, bank branch and amount fields, make sure the data is valid!', [
+                'error' => $e->getMessage(),
+                'stark_order' => $starkOrder ?? null
+            ]);
 
-        $Transaction->stark_order = $transfers[0]->id;
-        $Transaction->status = "pending";
-        $Transaction->type = "bank_transfer";
-        $Transaction->save();
-
-
-        return response()->json([
-            'message' => 'Payment created successfully',
-            'data' =>   $transfers[0],
-        ], 200);
+            return response()->json(['error' => 'To make a transfer, enter the account, bank branch and amount fields, make sure the data is valid!'], 500);
         }
-        return response()->json([
-            'message' => 'To make a transfer, enter the bank branch account and amount fields.',
-        ], 500);
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,19 +15,19 @@ return new class extends Migration
     {
         Schema::create('webhook_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
             $table->string('stark_order');
-            $table->string('event');
-            $table->string('status');
+
+            $table->string('type');
             $table->string('workspaceId');
             $table->text('payload');
+            $table->text('error');
             $table->timestamps();
 
-          
+
             $table->foreign('stark_order')
-                  ->references('stark_order')
-                  ->on('transactions')
-                  ->onDelete('cascade');
+                ->references('stark_order')
+                ->on('transactions')
+                ->onDelete('cascade');
         });
     }
 

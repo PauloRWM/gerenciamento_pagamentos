@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unique('stark_order');
             $table->string("status");
             $table->string("type");
+            $table->string("url_proof")->default("null");
             $table->timestamps();
         });
     }
