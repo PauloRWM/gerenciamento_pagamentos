@@ -70,7 +70,7 @@ Obs: Se voce deseja testar com o webhook starkbank, public este projeto. Para Fi
 
 ## Criação de Pagamentos via CURL
 
-Execute o seguinte comando para criar uma transferência:
+Execute o seguinte comando(no caso usando curl, mas voce pode usar o postman para testar!) para criar uma transferência:
 
 ```bash
 curl --location 'http://localhost:8000/api/createPayment' \
