@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bankCode\": \"001\",\r\n    \"branch\": \"2555-0\",\r\n    \"account\": \"48644-2\",\r\n    \"amount\": \"6\",\r\n    \"name\": \"Paulo Ricardo Waquim Medeiros\",\r\n    \"document\":\"08418181346\"\r\n}\r\n",
+					"raw": "{\r\n    \"bankCode\": \"\",\r\n    \"branch\": \"\",\r\n    \"account\": \"\",\r\n    \"amount\": \"\",\r\n    \"name\": \"\",\r\n    \"document\":\"\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
