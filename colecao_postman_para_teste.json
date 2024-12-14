@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "930a881f-4fdb-4ed7-bef6-f03f62dfa1fa",
+		"name": "gerenciamento_pagamentos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16168920"
+	},
+	"item": [
+		{
+			"name": "createPayment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankCode\": \"001\",\r\n    \"branch\": \"2555-0\",\r\n    \"account\": \"48644-2\",\r\n    \"amount\": \"6\",\r\n    \"name\": \"Paulo Ricardo Waquim Medeiros\",\r\n    \"document\":\"08418181346\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/createPayment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"createPayment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[success] WebhookStarkBankTest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"event\": {\r\n        \"created\": \"2024-12-12T17:40:01.162462+00:00\",\r\n        \"id\": \"6686073335840768\",\r\n        \"log\": {\r\n            \"created\": \"2024-12-12T17:40:00.626523+00:00\",\r\n            \"errors\": [],\r\n            \"id\": \"4606395303329792\",\r\n            \"transfer\": {\r\n                \"accountNumber\": \"4211190552-1\",\r\n                \"accountType\": \"checking\",\r\n                \"amount\": 100000,\r\n                \"bankCode\": \"323\",\r\n                \"branchCode\": \"0001\",\r\n                \"created\": \"2024-12-12T16:34:41.205313+00:00\",\r\n                \"description\": \"Paulo Ricardo Waquim Medeiros (084.181.813-46)\",\r\n                \"displayDescription\": \"\",\r\n                \"externalId\": \"NjI2MDYxNjk3Mjk5MjUxMjoxMDAwMDA6MDg0LjE4MS44MTMtNDY6MzIzOjAwMDE6NDIxMTE5MDU1Mi0xOjIwMjQtMTItMTI=\",\r\n                \"fee\": 200,\r\n                \"id\": \"6277664520273920\",\r\n                \"metadata\": {\r\n                    \"authentication\": \"STR20241212033051044\"\r\n                },\r\n                \"name\": \"Paulo Ricardo Waquim Medeiros\",\r\n                \"rules\": [],\r\n                \"scheduled\": \"2024-12-12T16:34:41.180435+00:00\",\r\n                \"status\": \"success\",\r\n                \"tags\": [],\r\n                \"taxId\": \"084.181.813-46\",\r\n                \"transactionIds\": [\r\n                    \"84495548018689689774080836298263\"\r\n                ],\r\n                \"updated\": \"2024-12-12T17:40:00.627122+00:00\"\r\n            },\r\n            \"type\": \"success\"\r\n        },\r\n        \"subscription\": \"transfer\",\r\n        \"workspaceId\": \"6260616972992512\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/webhook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"webhook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[failed] WebhookStarkBankTest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"event\": {\r\n        \"created\": \"2024-12-12T16:34:11.861991+00:00\",\r\n        \"id\": \"5259841297711104\",\r\n        \"log\": {\r\n            \"created\": \"2024-12-12T16:34:11.474634+00:00\",\r\n            \"errors\": [\r\n                \"Insufficient balance\"\r\n            ],\r\n            \"id\": \"6580243288555520\",\r\n            \"transfer\": {\r\n                \"accountNumber\": \"4211190552-1\",\r\n                \"accountType\": \"checking\",\r\n                \"amount\": 10000000,\r\n                \"bankCode\": \"323\",\r\n                \"branchCode\": \"0001\",\r\n                \"created\": \"2024-12-12T16:34:10.483829+00:00\",\r\n                \"description\": \"Paulo Ricardo Waquim Medeiros (084.181.813-46)\",\r\n                \"displayDescription\": \"\",\r\n                \"externalId\": \"NjI2MDYxNjk3Mjk5MjUxMjoxMDAwMDAwMDowODQuMTgxLjgxMy00NjozMjM6MDAwMTo0MjExMTkwNTUyLTE6MjAyNC0xMi0xMg==\",\r\n                \"fee\": 200,\r\n                \"id\": \"5102241107148800\",\r\n                \"metadata\": {},\r\n                \"name\": \"Paulo Ricardo Waquim Medeiros\",\r\n                \"rules\": [],\r\n                \"scheduled\": \"2024-12-12T16:34:10.289276+00:00\",\r\n                \"status\": \"failed\",\r\n                \"tags\": [],\r\n                \"taxId\": \"084.181.813-46\",\r\n                \"transactionIds\": [],\r\n                \"updated\": \"2024-12-12T16:34:11.474693+00:00\"\r\n            },\r\n            \"type\": \"failed\"\r\n        },\r\n        \"subscription\": \"transfer\",\r\n        \"workspaceId\": \"6260616972992512\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/webhook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"webhook"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8000",
+			"type": "string"
+		}
+	]
+}

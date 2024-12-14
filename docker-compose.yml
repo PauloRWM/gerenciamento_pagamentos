@@ -1,51 +1,39 @@
-version: '3.8'
+version: "3.4"
 
 services:
-  laravel:
-    image: php:8.2-apache
-    container_name: laravel_app
-    working_dir: /var/www/html
-    volumes:
-      - ./src:/var/www/html
-      - ./php.ini:/usr/local/etc/php/php.ini
-    ports:
-      - "8080:80" 
-    environment:
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_DATABASE=laravel
-      - DB_USERNAME=laravel_user
-      - DB_PASSWORD=laravel_password
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    depends_on:
-      - mariadb
-      - redis
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8181"
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            DB_DATABASE: ${DB_DATABASE}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
 
-  mariadb:
-    image: mariadb:10.6
-    container_name: mariadb_db
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root_password
-      - MYSQL_DATABASE=laravel
-      - MYSQL_USER=laravel_user
-      - MYSQL_PASSWORD=laravel_password
-    networks:
-      - laravel_network
+        command: >
+            sh -c "while ! mysqladmin ping -h'db' --silent; do
+                sleep 1
+            done &&
+            php artisan migrate --force &&
+            php artisan serve --host=0.0.0.0 --port=8181"
 
-  redis:
-    image: redis:6.2
-    container_name: redis_cache
-    command: ["redis-server", "--appendonly", "yes"]
-    networks:
-      - laravel_network
+    db:
+        image: mariadb:10.5
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE} 
+            MARIADB_USER: ${DB_USERNAME}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
 
-volumes:
-  mariadb_data:
-    driver: local
-
-networks:
-  laravel_network:
-    driver: bridge
+        # volumes:
+        #     - ./data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
