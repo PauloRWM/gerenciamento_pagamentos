@@ -1,38 +1,49 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+  </a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/laravel/framework/actions">
+    <img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status">
+  </a>
+  <a href="https://packagist.org/packages/laravel/framework">
+    <img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads">
+  </a>
+  <a href="https://packagist.org/packages/laravel/framework">
+    <img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version">
+  </a>
+  <a href="https://packagist.org/packages/laravel/framework">
+    <img src="https://img.shields.io/packagist/l/laravel/framework" alt="License">
+  </a>
+</p>
 
+# Gerenciador de Pagamentos com StarkBank
 
-
-# Gerenciador de pagamentos com STARKBANK
-
-Projeto desenvolvido para teste tecnico
+Este projeto foi desenvolvido para um teste técnico e utiliza o Laravel junto ao Docker.
 
 ## Pré-requisitos
 
-Antes de iniciar, certifique-se de ter instalado:
+Antes de começar, instale os seguintes programas:
 
 - Docker
 - Docker Compose
 
-Você pode verificar a instalação com os seguintes comandos:
+Verifique a instalação executando os comandos que retornam as versões dos programas.
 
-```bash
-docker --version
-docker-compose --version
-```
+## Autenticação
 
-Se esses comandos não retornarem a versão instalada, você precisará instalar o Docker e o Docker Compose.
+As credenciais StarkBank são necessárias para autenticação. Configure as seguintes variáveis no arquivo `.env`:
+
+- `PRIVATE_KEY`: Sua chave privada (copie e cole o conteúdo da sua chave privada aqui).
+- `PROJECT_ID`
+- `ENVIRONMENT`
+
+Para mais detalhes sobre autenticação, consulte a [documentação da StarkBank](https://starkbank.com/docs/api#introduction).
 
 ## Instalação
-
-Para colocar o projeto em funcionamento, siga estes passos:
 
 1. Clone o repositório:
    ```bash
@@ -42,34 +53,49 @@ Para colocar o projeto em funcionamento, siga estes passos:
    ```bash
    cd [nome-do-diretório]
    ```
-3. Execute o Docker Compose:
+3. Execute o Docker Compose para construir e iniciar os contêineres:
    ```bash
    docker-compose up
    ```
 
-Isso construirá as imagens necessárias e iniciará os contêineres definidos no arquivo `docker-compose.yml`.
+## Configuração do Webhook
 
-## Configuração de Webhook
+Configure a URL do webhook conforme o ambiente:
 
-A URL do webhook é configurada com base no ambiente em que o projeto está sendo executado:
-
-- **Produção:** Configure a URL de webhook no ambiente de produção usando a variável de ambiente `APP_URL`.
-- **Desenvolvimento:** Para testes locais, use:
+- **Produção**: Defina a `APP_URL` no ambiente de produção.
+- **Desenvolvimento**:
   ```plaintext
   http://localhost:8000/api/webhook
   ```
 
-Adicione `/api/webhook` ao `APP_URL` para formar a URL completa do webhook.
+## Criação de Pagamentos via CURL
 
-## Uso
+Execute o seguinte comando para criar uma transferência:
+
+```bash
+curl --location 'http://localhost:8000/api/createPayment' \
+--header 'Content-Type: application/json' \
+--data '{
+    "bankCode": "001",
+    "branch": "0001",
+    "account": "123456-7",
+    "amount": 1000,
+    "name": "Fulano de Tal",
+    "document": "000.000.000-00"
+}'
+```
+
+## URL de Notificação
+
+Configure a `URL_NOTIFICATION` no arquivo `.env` para as notificações.
 
 
-
-
-
+## Observação
+Para filas, optei em usar o db, mas poderia trabalhar com o REDIS. Decidi isso para diminuir a dependencia 
+de serviços externos (aplicação redis), mas em um ambiente de produção com alto fluxo, é recomendado o uso do REDIS
 
 ## Contato
 
-paulox.tec@gmail.com
+Para esclarecimentos, entre em contato através do e-mail: paulox.tec@gmail.com
 
 ---
