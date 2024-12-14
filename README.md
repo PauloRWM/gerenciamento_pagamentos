@@ -68,7 +68,7 @@ Configure a URL do webhook conforme o ambiente:
   http://localhost:8000/api/webhook
   ```
 
-Diga as instruções abaixo para setar a url de webhook no starkbank:
+Siga as instruções abaixo para setar a url de webhook no starkbank:
 
 1 - Acesse sua conta
 2 - Navegue ate integrações
