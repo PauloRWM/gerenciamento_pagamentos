@@ -40,7 +40,9 @@ Para mais detalhes sobre autenticação, consulte a [documentação da StarkBank
    ```bash
    cd [nome-do-diretório]
    ```
-3. Execute o Docker Compose para construir e iniciar os contêineres:
+3. Renomeie o env.example, e preencha campos do starkbank, url de notificação e banco de dados:
+   
+4. Execute o Docker Compose para construir e iniciar os contêineres:
    ```bash
    docker-compose up
    ```
