@@ -22,7 +22,7 @@
 
 # Gerenciador de Pagamentos com StarkBank
 
-Este projeto foi desenvolvido para um teste técnico e utiliza o Laravel junto ao Docker.
+Este projeto foi desenvolvido para um teste técnico e utiliza o Laravel.
 
 ## Pré-requisitos
 
