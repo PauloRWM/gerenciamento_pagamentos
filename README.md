@@ -68,6 +68,17 @@ Configure a URL do webhook conforme o ambiente:
   http://localhost:8000/api/webhook
   ```
 
+Diga as instruções abaixo para setar a url de webhook no starkbank:
+
+1 - Acesse sua conta
+2 - Navegue ate integrações
+3 - Clique em webhook
+4 - Clique em "Novo Webhook", em Subscriptions: escolha "Transfer" e em URL cole a sua url de webhook
+
+Obs: Se voce deseja testar com o webhook starkbank, public este projeto. Para Fins de testes, deixei duas amostras de req do webhook no postman, uma de transferencia bem sucedida e uma de mal sucedida
+
+
+
 ## Criação de Pagamentos via CURL
 
 Execute o seguinte comando para criar uma transferência:
@@ -92,7 +103,8 @@ Configure a `URL_NOTIFICATION` no arquivo `.env` para as notificações.
 
 ## Observação
 Para filas, optei em usar o db, mas poderia trabalhar com o REDIS. Decidi isso para diminuir a dependencia 
-de serviços externos (aplicação redis), mas em um ambiente de produção com alto fluxo, é recomendado o uso do REDIS
+de serviços externos (aplicação redis), mas em um ambiente de produção com alto fluxo, é recomendado o uso do REDIS.
+
 
 ## Contato
 
